@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HELP</title>
+</head>
+<body>
+<style>
+     table,th,td
+     {
+         border:1px solid black;
+         border-collapse:collapse;
+     }
+     th,td
+     {
+         padding:5px;
+     }
+ </style>
+ <h3>URL Shortener:</h3>
+ URL Shortener consists of configuration and user part.
+ <br/>Configuration serves for:
+ <ul>
+     <li>Opening of accounts</li>
+     <li>Registration of URLs in the 'Shortener' service</li>
+     <li>Displaying stats</li>
+ </ul>
+ To access Configuration part use REST call with JSON parameters.
+ <br/>User part serves for redirection.
+ <br/>
+ <b>Running</b>
+ <ol>
+     <li>Start a Tomcat web server with default relative url /help. Example: http://localhost:8080/help</li>
+     <li>Deploy the service war file to the web server.</li>
+ </ol>
+ <b>Usage</b>
+ <br/>Use a client-side application to access following functionalities. All request and response types are application/json.
+ <ol>
+     <li>
+         <u><i>Creating account</i></u>
+         <br/>HTTP Method: <b>POST</b>
+         <br/>URI: <b>/account</b>
+         <br/>Request Body: <b>id</b>
+         <ul>
+             <li>Example: {\"id\":\"myAccount1\"}</li>
+         </ul>
+         Response Body: <b>success</b>, <b>description</b>, <b>password</b>
+         <ul>
+             <li>Example: {\"success\":\"true\",\"description\":\"Your account is opened.\",\"password\":\"xC345Fc0\"}
+         </ul>
+     </li>
+     <li>
+         <u><i>Registering URL</i></u>
+         <br/>HTTP Method: <b>POST</b>
+         <br/>URI: <b>/register</b>
+         <br/>Request Header: <b>Authorization</b>
+         <br/>Request Body: <b>url</b>, <b>redirectType</b>
+         <ul>
+             <li>Example: {\"url\":\"http://stackoverflow.com/questions/1567929/website-safe-data-access-architecture-question?rq=1\",\"redirectType\":\"301\"}</li>
+         </ul>
+         Response Body: <b>shortUrl</b>
+         <ul>
+             <li>Example: {\"shortUrl\":\"http://localhost:8080/xYswlE\"}
+         </ul>
+     </li>
+     <li>
+         <u><i>Fetching statistics</i></u>
+         <br/>HTTP Method: <b>GET</b>
+         <br/>URI: <b>/statistic/{accountId}</b>
+         <br/>Request Header: <b>Authorization</b>
+         Response Body: <b>key:value</b>
+         <ul>
+             <li>Example: {\"http://myweb.com/somelongurl/somedirectory/\":\"10\",\"http://myweb.com/somelongurl1/somedirectory2/\":\"4\",\"http://myweb.com/somelongurl3/somedirectory4/\":\"91\"}
+         </ul>
+     </li>
+     <li>
+         <u><i>Redirecting</i></u>
+         <ul>
+             Entering shortUrl provided in \"Registering URL\" redirection occurs to registered url and number of calls for that url is incremented by 1.
+         </ul>
+     </li>
+ </ol>
+</body>
+</html>
